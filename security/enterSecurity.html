@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="enterSecurity.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table
+      class="catalog-header"
+      border="0"
+      width="900"
+      cellpadding="0"
+      cellspacing="0"
+      align="center"
+      bgcolor="#ff8000"
+    >
+      <tr>
+        <td width="150" align="center">
+          <a href="../main/index.html">
+            <img src="../images/home.png" />
+          </a>
+        </td>
+        <td align="center">
+          <h1>ДоброСтрой</h1>
+        </td>
+        <td width="200">
+          <table
+            class="registration"
+            cellpadding="5"
+            width="100%"
+            bgcolor="yellow"
+          >
+            <tr>
+              <td align="center" colspan="2">
+                <a href="..\security\registrationsSecurity.html">
+                  <button>Регистрация</button>
+                </a>
+              </td>
+              <div id="loggedInInfo" style="display: none">
+                <p id="loginInfo"></p>
+                <button onclick="logoutUser()">Выйти</button>
+              </div>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <div class="registration-panel" align="center">
+      <h2>Вход</h2>
+      <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required /><br /><br />
+
+        <label for="password">Пароль:</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+        /><br /><br />
+
+        <button type="button" onclick="loginUser()">Войти</button>
+      </form>
+    </div>
+    <script>
+      // Обработка входа
+      function loginUser() {
+        // Отмена стандартного поведения формы
+        // Получение значений полей формы
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+        // Создание объекта с логином
+        var loginData = {
+          email: email,
+          password: password,
+        };
+
+        // Отправка POST-запроса с JSON-логином на серверный эндпоинт
+        fetch("http://localhost:8080/security/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(loginData),
+        })
+          .then(function (response) {
+            if (response.ok) {
+              // Если вход успешен, выполните необходимые действия, например, отобразите сообщение об успешном входе и выполните перенаправление на другую страницу
+              sessionStorage.setItem("loggedIn", "true");
+              sessionStorage.setItem("email", email); // Store email in session storage
+              sessionStorage.setItem("password", password); // Store password in session storage
+              console.log(sessionStorage.getItem("email"));
+              console.log(sessionStorage.getItem("password"));
+              alert("Вход успешен!");
+              window.location.href = "../main/index.html"; // Перенаправление на главную страницу
+            } else {
+              // Если произошла ошибка при входе, выведите сообщение об ошибке
+              throw new Error("Ошибка при входе");
+            }
+          })
+          .catch(function (error) {
+            // Обработка ошибки входа
+            console.error("Ошибка:", error);
+            alert("Ошибка при входе. Пожалуйста, повторите попытку!");
+          });
+
+        document.addEventListener("DOMContentLoaded", function () {
+          const isLoggedIn = sessionStorage.getItem("loggedIn");
+
+          if (isLoggedIn === "true") {
+            // Пользователь зарегистрирован, отображаем приветствие и кнопку выхода
+            const userName = sessionStorage.getItem("email"); // Use email as the username for demonstration
+            document.getElementById(
+              "loginInfo"
+            ).textContent = `Добрый день, ${userName}!`;
+            document.getElementById("logoutButton").style.display = "block";
+          } else {
+            // Пользователь не зарегистрирован, отображаем блок авторизации
+            document.getElementById("loginForm").style.display = "block";
+          }
+        });
+
+        function logoutUser() {
+          // Очищаем информацию о пользователе из sessionStorage
+          sessionStorage.removeItem("loggedIn");
+          sessionStorage.removeItem("email"); // Remove email from session storage
+          sessionStorage.removeItem("password"); // Remove password from session storage
+
+          // Перезагружаем страницу или выполняем другие действия
+          window.location.reload();
+        }
+      }
+    </script>
+
+    <footer class="footer" style="text-align: center" align="center">
+      <p>Автор: Домострой</p>
+      <p>
+        <a href="mailto:hege@example.com">hege@example.com</a>
+      </p>
+      <p>© Все права защищены</p>
+    </footer>
+  </body>
+</html>

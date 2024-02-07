@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <title>Страница 1</title>
+</head>
+
+<body>
+    <table border="0" width="900" cellpadding="0" cellspacing="0" align="center" bgcolor="#ff8000">
+        <tr>
+            <td width="150" align="center">
+                <a href="../main/index.html">
+                    <img src="../images/home.png" />
+                </a>
+            </td>
+            <td align="center">
+                <h1>ДоброСтрой</h1>
+            </td>
+            <td width="200">
+                <div id="loginForm" style="display: none">
+                    <table cellpadding="5" width="100%" bgcolor="yellow">
+                        <tr>
+                            <td align="center" colspan="2">
+                                <a href="..\security\enterSecurity.html">
+                                    <button>Войти</button>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" colspan="2">
+                                <a href="..\security\registrationsSecurity.html">
+                                    <button>Регистрация</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="loggedInInfo" style="display: none">
+                    <p id="loginInfo"></p>
+                    <button onclick="logoutUser()">Выйти</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <table border="0" width="900" cellpadding="5" align="center">
+        <tr>
+            <td align="center">
+                <a href="index.html">Главная</a>
+            </td>
+            <td align="center">
+                <a href="https://xn--90afqsbambik.xn--p1ai/">О нас</a>
+            </td>
+            <td align="center">
+                <a href="https://xn--90afqsbambik.xn--p1ai/">Услуги</a>
+            </td>
+            <td align="center">
+                <a href="..\security\Contacts.html">Контакты</a>
+            </td>
+            <td align="center">
+                <a href="/catalog/index1.html">Каталог</a>
+            </td>
+            <td align="center"><a href="..\detailed\basket.html">Корзина</a></td>
+        </tr>
+    </table>
+    <div class="product-container" id="productContainer"><!-- а -->
+    </div>
+
+    <footer style="text-align: center" align="center" bgcolor="#ff8000">
+        <p>Автор: Домострой</p>
+        <p>
+            <a href="mailto:hege@example.com">hege@example.com</a>
+        </p>
+        <p>© Все права защищены</p>
+    </footer>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const loginForm = document.getElementById('loginForm');
+        const loggedInInfo = document.getElementById('loggedInInfo');
+
+        // Проверяем, зарегистрирован ли пользователь при загрузке страницы
+        const isLoggedIn = sessionStorage.getItem('loggedIn');
+        const userName = sessionStorage.getItem('userName');
+        const userEmail = sessionStorage.getItem('email'); // Retrieve stored email
+
+        if (isLoggedIn === 'true') {
+            // Пользователь зарегистрирован, отображаем логин и кнопку
+            loggedInInfo.style.display = 'block';
+            document.getElementById('loginInfo').textContent = `Добрый день, ${userName || userEmail}!`;
+        } else {
+            // Пользователь не зарегистрирован, отображаем блок авторизации
+            loginForm.style.display = 'block';
+        }
+    });
+
+    // При выходе пользователя
+    function logoutUser() {
+        // Очищаем информацию о пользователе из sessionStorage
+        sessionStorage.removeItem('loggedIn');
+        sessionStorage.removeItem('userName');
+        sessionStorage.removeItem('email'); // Remove stored email
+
+        // Перезагружаем страницу или выполняем другие действия
+        window.location.reload();
+    }
+
+
+    $(document).ready(function () { // Получаем данные с сервера
+        $.ajax({
+            url: "http://localhost:8080/things/catalog",
+            method: "GET",
+            dataType: "json",
+            
+            success: function (data) { // Обработка данных и генерация карточек товаров
+                console.log(data);
+                renderProductCards(data);
+            },
+            error: function (error) {
+                
+                console.error("Ошибка при получении каталога:", error);
+            }
+        });
+
+        function renderProductCards(products) {
+            var container = $("#productContainer");
+
+            // Перебираем товары и создаем карточку для каждого
+            products.forEach(function (product) {
+                console.log(product);
+                var card = `
+                <div class="product-card__item">
+                    <div class="product-card__images">
+                        <a class="product-link" href="../detailed/indexCatalog${product.id}.html">
+
+                            <img class="product-image" src="${product.img
+                    }" alt="${product.name
+                    }" itemprop="image">
+                        </a>
+                    </div>
+                    <div class="product-card__description">
+                        <div class="product-card__controls">
+                            <a class="product-card__control add-to-wish" data-to-wish="" data-item-id="unique_id_${product.id
+                    }" data-action-url="#">
+                                ${product.price
+                    } рублей
+                            </a>
+                            <!-- Добавьте необходимые элементы управления (кнопки и т.д.) здесь -->
+                        </div>
+                        <div class="product-description">
+                            <p class="product-info">
+                                <span>Code: ${product.id
+                    }</span>
+                                <!-- Добавьте дополнительную информацию о товаре, если необходимо -->
+                            </p>
+                            <span class="product-title" itemprop="name">${product.name
+                    }</span>
+                            <div itemprop="offers" itemscope="" itemtype="https://schema.org/Offer">
+                                <p class="product-price" itemprop="price">${product.price
+                    } ₽/шт</p>
+                                <span style="display: none;" itemprop="priceCurrency">RUB</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                container.append(card);
+            });
+        }
+    });
+</script>
+
+</html>

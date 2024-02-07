@@ -1,0 +1,68 @@
+body {
+    flex-direction: column;
+    min-height: 100vh;
+    display: flex;
+}
+
+.registration-panel {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 5px;
+    flex-grow: 1; /* Расширяет контейнер до заполнения всей доступной высоты */
+}
+
+.registration-panel h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.registration-panel label {
+    display: block;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+.registration-panel input[type="text"],
+.registration-panel input[type="email"],
+.registration-panel input[type="password"],
+.registration-panel input[type="tel"] {
+    width: 100%;
+    padding: 5px; /* Уменьшили внутренний отступ с 10px до 5px */
+    border: 1px solid #ccc;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.registration-panel button,
+.registration-panel label:last-of-type {
+    margin-top: 1px;
+}
+
+.registration-panel button {
+    background-color: #ff8000;
+    color: #803e3e;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.registration-panel button:hover {
+    background-color: #e57500;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: black;
+    text-align: center;
+    padding: 10px;
+}

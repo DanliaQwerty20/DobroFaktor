@@ -1,0 +1,50 @@
+#searchResults {
+    text-align: center;
+    width: 900px;
+    margin: 0 auto;
+    margin-top: 20px; /* Добавляем немного отступа сверху */
+}
+
+.product-card__item {
+    display: inline-block;
+    border: 1px solid #ddd; /* Изменяем цвет границы */
+    border-radius: 8px; /* Добавляем скругление углов */
+    padding: 10px;
+    width: 250px;
+    margin: 0 10px 20px; /* Добавляем отступы между товарами */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавляем небольшую тень */
+    transition: transform 0.3s ease-in-out; /* Добавляем плавное изменение при наведении */
+}
+
+.product-card__item:hover {
+    transform: scale(1.05); /* Увеличиваем масштаб при наведении */
+}
+
+.product-card__images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-card__images img.product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px; /* Скругляем углы изображения */
+}
+
+.product-card__description {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.product-card__description .product-title {
+    font-weight: bold;
+    color: #333; /* Изменяем цвет текста */
+    margin: 5px 0;
+}
+
+.product-card__description .product-price {
+    font-weight: bold;
+    color: #e44d26; /* Изменяем цвет цены */
+    margin-top: 5px;
+}

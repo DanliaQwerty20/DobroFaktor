@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Document</title>
+        <link rel="stylesheet" type="text/css" href="registrationsSecurity.css"/>
+    </head>
+    <body>
+        <table class="catalog-header" border="0" width="900" cellpadding="0" cellspacing="0" align="center" bgcolor="#ff8000">
+            <tr>
+                <td width="150" align="center">
+                    <a href="../main/index.html">
+                        <img src="../images/home.png"/>
+                    </a>
+                </td>
+                <td align="center">
+                    <h1>ДоброСтрой</h1>
+                </td>
+                <td width="200">
+                    <table class="registration" cellpadding="5" width="100%" bgcolor="yellow">
+                        <tr>
+                            <td align="center" colspan="2">
+                                <a href="..\security\enterSecurity.html">
+                                    <button>Войти</button>
+                                </a>
+                            </td>
+                            <div id="loggedInInfo" style="display: none">
+                                <p id="loginInfo"></p>
+                                <button onclick="logoutUser()">Выйти</button>
+                            </div>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <div class="registration-panel" align="center">
+            <h2>Регистрация</h2>
+            <form action="register.php" method="POST">
+                <label for="name">Имя:</label>
+                <input type="text" name="name" id="name" required/><br/><br/>
+
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" required/><br/><br/>
+
+                <label for="password">Пароль:</label>
+                <input type="password" name="password" id="password" required/><br/><br/>
+
+                <label for="phone">Телефон:</label>
+                <input type="tel" name="phone" id="phone" required/><br/><br/>
+
+                <button type="button" onclick="registerUser()">
+                    Зарегистрироваться
+                </button>
+            </form>
+        </div>
+
+        <script>
+            function registerUser() {
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const phone = document.getElementById("phone").value;
+
+                const userData = {
+                    name,
+                    email,
+                    password,
+                    phone
+                };
+
+                // Отправка данных на сервер
+                fetch("http://localhost:8080/security/registration", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userData)
+                }).then((response) => {
+                    if (!response.ok) {
+                        throw new Error();
+                    }
+                    // Нет необходимости возвращать response.json(), так как сервер отправляет только статус
+                    // Вам также не нужно разбирать JSON, так как он отсутствует в ответе
+
+                    return response.text(); // Если сервер отправляет какие-либо дополнительные данные, вы можете их использовать
+                }).then((data) => { // Здесь вы можете использовать данные, если они отправлены с сервера, но в данном случае это необязательно
+
+                    sessionStorage.setItem("loggedIn", "true");
+                    sessionStorage.setItem("userName", name);
+                    console.log(sessionStorage);
+                    alert("Регистрация успешна!");
+                    // Перенаправление на главную страницу
+                    window.location.href = "../main/index.html";
+                }).catch((error) => {
+                    console.error("Ошибка:", error);
+                    alert("Ошибка при регистрации. Пожалуйста, повторите попытку!");
+                });
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const isLoggedIn = sessionStorage.getItem("loggedIn");
+
+                    if (isLoggedIn === "true") { // Пользователь зарегистрирован, отображаем приветствие и кнопку выхода
+                        const userName = sessionStorage.getItem("userName");
+                        document.getElementById("loginInfo").textContent = `Добрый день, ${userName}!`;
+                        document.getElementById("logoutButton").style.display = "block";
+                    } else { // Пользователь не зарегистрирован, отображаем блок авторизации
+                        document.getElementById("loginForm").style.display = "block";
+                    }
+                });
+                function logoutUser() { // Очищаем информацию о пользователе из sessionStorage
+                    sessionStorage.removeItem("loggedIn");
+                    sessionStorage.removeItem("userName");
+
+                    // Перезагружаем страницу или выполняем другие действия
+                    window.location.reload();
+                }
+            }
+        </script>
+        <footer class="footer" style="text-align: center" align="center" bgcolor="#ff8000">
+            <p>Автор: Домострой</p>
+            <p>
+                <a href="mailto:hege@example.com">hege@example.com</a>
+            </p>
+            <p>© Все права защищены</p>
+        </footer>
+    </body>
+</html>
+

@@ -1,0 +1,71 @@
+body {
+    flex-direction: column;
+    min-height: 100vh;
+    display: flex;
+}
+
+.registration-panel {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+    flex-grow: 1;
+}
+
+.registration-panel h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.registration-panel label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.registration-panel input[type="text"],
+.registration-panel input[type="email"],
+.registration-panel input[type="password"],
+.registration-panel input[type="tel"] {
+    width: 100%;
+    padding: 5px; 
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 110px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+/* Отступ справа только для поля ввода номера телефона */
+.phone-input {
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.registration-panel button,
+.registration-panel label:last-of-type {
+    margin-top: 20px;
+}
+
+.registration-panel button {
+    background-color: #ff8000;
+    color: #803e3e;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.registration-panel button:hover {
+    background-color: #e57500;
+}
+

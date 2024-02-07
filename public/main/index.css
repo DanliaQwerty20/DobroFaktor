@@ -1,0 +1,151 @@
+table.catalog-header {
+    border: 0;
+    width: 900px;
+    margin: 0 auto;
+    background-color: #ff8000;
+}
+
+/* Для всех ячеек таблицы каталога */
+table.catalog-header td {
+    text-align: center;
+    height: 5px; /* Уменьшаем высоту ячейки на ваш выбор */
+}
+
+/* Для изображений внутри таблицы каталога */
+table.catalog-header a img {
+    width: 100px;
+    height: 100px;
+    border: 0;
+}
+
+/* Для заголовков h1 и h2 */
+table.catalog-header h1, table.catalog-header h2 {
+    color: white;
+    margin: 0;
+    margin-left: 100px;
+}
+
+/* Для таблицы с классом registration */
+table.catalog-header table.registration {
+    width: 200px;
+    background-color: yellow;
+}
+
+/* Для полей ввода внутри таблицы с классом registration */
+table.catalog-header table.registration input[type="text"],
+table.catalog-header table.registration input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Для кнопки внутри таблицы с классом registration */
+table.catalog-header table.registration input[type="submit"] {
+    margin-top: 10px;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product-container {
+    text-align: center; /* Выравнивание контейнера по центру */
+    width: 900px; /* Ширина соответствует вашей таблице шапки */
+    margin: 0 auto; /* Центрирование по горизонтали */
+}
+
+.product-card__item {
+    display: inline-block;
+    border: 1px solid black;
+    padding: 5px;
+    width: 250px;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.product-card__item2 {
+    border: 1px solid black;
+    padding: 5px;
+    width: 250px;
+    margin-top: auto;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+
+.product-card__images {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-card__images img.product-image {
+    width: 150px;
+    height: 150px;
+}
+
+.product-card__description {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.product-card__description .product-info {
+    margin-bottom: 5px;
+}
+
+.product-card__description .product-title {
+    font-weight: bold;
+    color: black;
+}
+
+.product-card__description .product-price {
+    font-weight: bold;
+    color: black;
+    margin-top: 5px;
+}
+
+.product-card__description [itemprop="offers"] {
+    display: none;
+}
+
+.slider{
+    width: 600px;
+    margin: 0 auto;
+
+}
+
+.slider-container{
+    overflow: hidden;
+    background-color: pink;
+}
+
+.slider-track{
+    display: flex;
+    transition: .2s;
+    
+}
+.slider-item {
+    height: 500px; /* Adjust the height as needed */
+    min-width: 200px; /* Adjust the minimum width as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* or object-fit: contain; depending on your preference */
+}
+.slider-item:nth-child(3n+1){
+    background-color: red;
+}
+.slider-item:nth-child(3n+2){
+    background-color: blue;
+}
+.slider-item:nth-child(3n+3){
+    background-color: green;
+}
+
+.slider-buttons{
+    text-align: center;
+}
